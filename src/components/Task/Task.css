@@ -1,0 +1,72 @@
+.taskWrapper li.task {
+  list-style: none;
+  width: 25vw;
+  height: 25vw;
+  background-color: yellow;
+  margin: 10px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 10px 10px 5px grey;
+  font-size: 3vw;
+}
+
+.taskWrapper li.task.alta {
+  background-color: red;
+}
+
+.taskWrapper .done {
+  text-decoration: line-through;
+}
+
+.taskWrapper li.task {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.taskWrapper li.task input {
+  height: 5%;
+}
+
+.taskWrapper li.task p {
+  align-items: center;
+}
+
+.taskWrapper li.task div.buttonWrapper {
+  height: 10%;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  font-size: 2vw;
+}
+
+.taskWrapper li.task div.titleWrapper {
+  height: 85%;
+  display: flex;
+  align-items: center;
+}
+
+/* Add/Edit view */
+.okBtn,
+.koBtn {
+  height: 40px;
+  width: 125px;
+  margin: 10px;
+  border-radius: 10px;
+  font-size: 1.25rem;
+}
+
+.taskText {
+  height: 50px;
+  width: 500px;
+  border-radius: 10px;
+  margin: 50px auto;
+}
+
+.formWrapper {
+  height: 75vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
