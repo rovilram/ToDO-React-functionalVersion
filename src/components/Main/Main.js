@@ -13,7 +13,6 @@ function Main(props) {
 
   useEffect(() => {
     let newTasks = getTasks();
-    console.log('MONTAJE', tasks);
     newTasks = newTasks ? newTasks : '[]';
     setTasks([...tasks, ...newTasks]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -21,7 +20,6 @@ function Main(props) {
 
   useEffect(() => {
     saveTasks(tasks);
-    console.log('ACTUALIZANDO', getTasks());
   });
 
   //Task component methods
