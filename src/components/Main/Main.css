@@ -35,3 +35,7 @@ div.addBtnWrapper {
   border-radius: 10px;
   font-size: 1.25rem;
 }
+
+main {
+  min-height: 80vh;
+}

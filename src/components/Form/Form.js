@@ -1,53 +1,55 @@
 import './Form.css';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
-class Form extends React.Component {
-  constructor(props) {
-    super(props);
+function Form(props) {
+  const [task, setTask] = useState('');
 
-    this.state = {
-      title: '',
-    };
-  }
-
-  componentDidMount() {
+  /*   componentDidMount() {
     this.setState({
       title: this.props.task ? this.props.task.title : '',
       id: this.props.task ? this.props.task.id : '',
       done: this.props.task ? this.props.task.done : '',
       priority: this.props.task ? this.props.task.priority : '',
-    });
-  }
+    }); */
 
-  formSubmit = (e) => {
+  useEffect(() => {
+    const task = {
+      title: props.task ? props.task.title : '',
+      id: props.task ? props.task.id : '',
+      done: props.task ? props.task.done : '',
+      priority: props.task ? props.task.priority : '',
+    };
+    setTask(task);
+  }, [props.task]);
+
+  const formSubmit = (e) => {
     e.preventDefault();
-    this.props.formSubmit(this.state);
+    props.formSubmit(task);
   };
 
-  handleTitle = (e) => {
-    this.setState({ title: e.target.value });
+  const handleTitle = (e) => {
+    setTask({...task, title: e.target.value });
   };
-  render() {
-    return (
-      <div className="formWrapper">
-        <form onSubmit={(e) => this.formSubmit(e)}>
-          <input
-            className="taskText"
-            type="text"
-            defaultValue={this.state.title}
-            onChange={this.handleTitle}
-          />
-          <input className="okBtn" type="submit" value={this.props.text} />
-          <input
-            className="koBtn"
-            type="button"
-            value="Cancelar"
-            onClick={this.props.clearAction}
-          />
-        </form>
-      </div>
-    );
-  }
+
+  return (
+    <div className="formWrapper">
+      <form onSubmit={(e) => formSubmit(e)}>
+        <input
+          className="taskText"
+          type="text"
+          defaultValue={task.title}
+          onChange={handleTitle}
+        />
+        <input className="okBtn" type="submit" value={props.text} />
+        <input
+          className="koBtn"
+          type="button"
+          value="Cancelar"
+          onClick={props.clearAction}
+        />
+      </form>
+    </div>
+  );
 }
 
 export default Form;

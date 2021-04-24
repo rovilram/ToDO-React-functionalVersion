@@ -1,8 +1,9 @@
 import './Task.css';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
-class Task extends React.Component {
-  constructor(props) {
+function Task(props) {
+  const [task, setTask] = useState({});
+  /*   constructor(props) {
     super(props);
 
     this.state = {
@@ -14,54 +15,65 @@ class Task extends React.Component {
     this.rot = {
       transform: `rotate(${Math.random() * 5 - 2.5}deg)`,
     };
-  }
+  } */
 
-  checkboxHandler = () => {
-    this.props.setDoneTask(this.state.id);
+  useEffect(() => {
+    const newTask = {
+      title: props.tarea.title,
+      id: props.tarea.id,
+      done: props.tarea.done,
+    };
+    setTask(newTask);
+  }, [props.tarea.title, props.tarea.id, props.tarea.done]);
+
+  const rotStyle = {
+    transform: `rotate(${Math.random() * 5 - 2.5}deg)`,
   };
 
-  editClickHandler = () => {
-    this.props.editTaskBtn(this.state.id);
+  const checkboxHandler = () => {
+    props.setDoneTask(task.id);
   };
 
-  delClickHandler = () => {
-    this.props.delTask(this.state.id);
+  const editClickHandler = () => {
+    props.editTaskBtn(task.id);
   };
 
-  selectHandler = (e) => {
-    this.props.changePriority(e.target.value, this.state.id);
+  const delClickHandler = () => {
+    props.delTask(task.id);
   };
 
-  render() {
-    return (
-      <li style={this.rot} className={`${this.props.tarea.priority} task`}>
-        <input
-          type="checkbox"
-          checked={this.props.tarea.done}
-          onChange={this.checkboxHandler}
-        ></input>
-        <div className="titleWrapper">
-          <p className={this.props.tarea.done ? 'done' : ''}>
-            {this.props.tarea.title}
-          </p>
-        </div>
-        <div className="seletWrapper">
-          <select
-            name="select"
-            onChange={this.selectHandler}
-            value={this.props.tarea.priority}
-          >
-            <option value="alta">Alta</option>
-            <option value="baja">Baja</option>
-          </select>
-        </div>
-        <div className="buttonWrapper">
-          <button onClick={this.editClickHandler}>Editar</button>
-          <button onClick={this.delClickHandler}>Eliminar</button>
-        </div>
-      </li>
-    );
-  }
+  const selectHandler = (e) => {
+    props.changePriority(e.target.value, task.id);
+  };
+
+  return (
+    <li style={rotStyle} className={`${props.tarea.priority} task`}>
+      <input
+        type="checkbox"
+        checked={props.tarea.done}
+        onChange={checkboxHandler}
+      ></input>
+      <div className="titleWrapper">
+        <p className={props.tarea.done ? 'done' : ''}>
+          {props.tarea.title}
+        </p>
+      </div>
+      <div className="seletWrapper">
+        <select
+          name="select"
+          onChange={selectHandler}
+          value={props.tarea.priority}
+        >
+          <option value="alta">Alta</option>
+          <option value="baja">Baja</option>
+        </select>
+      </div>
+      <div className="buttonWrapper">
+        <button onClick={editClickHandler}>Editar</button>
+        <button onClick={delClickHandler}>Eliminar</button>
+      </div>
+    </li>
+  );
 }
 
 export default Task;

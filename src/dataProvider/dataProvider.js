@@ -3,7 +3,7 @@ export const getTasks = () => {
   return JSON.parse(localStorage.getItem('Tasks'));
 };
 
-export const setTasks = (tasks) => {
+export const saveTasks = (tasks) => {
   console.log("GUARDANDO", tasks)
   localStorage.setItem('Tasks', JSON.stringify(tasks));
 };
