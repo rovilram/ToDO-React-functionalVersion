@@ -24,6 +24,7 @@ function Main(props) {
     console.log('ACTUALIZANDO', getTasks());
   });
 
+  //Task component methods
   const searchTask = (searchText) => {
     setFilter(searchText);
   };
@@ -36,19 +37,6 @@ function Main(props) {
     setTasks(newState);
   };
 
-  const addTask = (task) => {
-    task = {
-      title: task.title,
-      id: Date.now(),
-      done: false,
-      priority: 'baja',
-    };
-
-    setTasks([...tasks, task]);
-    setAction('');
-    saveTasks(tasks);
-  };
-
   const editTaskBtn = (index) => {
     setEdit(index);
     setAction('edit');
@@ -56,22 +44,6 @@ function Main(props) {
 
   const actionAdd = () => {
     setAction('add');
-  };
-
-
-  const clearAction = () => {
-    setAction('');
-  };
-
-  const editTask = (task) => {
-    const newTasks = tasks.map((el) => {
-      return task.id === el.id ? task : el;
-    });
-
-    setTasks(newTasks);
-    setEdit('');
-    setAction('');
-    saveTasks(tasks);
   };
 
   const delTask = (index) => {
@@ -90,6 +62,38 @@ function Main(props) {
     });
     setTasks(newTasks);
   };
+
+  //Form component methods
+
+  const addTask = (task) => {
+    task = {
+      title: task.title,
+      id: Date.now(),
+      done: false,
+      priority: 'baja',
+    };
+
+    setTasks([...tasks, task]);
+    setAction('');
+    saveTasks(tasks);
+  };
+
+  const editTask = (task) => {
+    const newTasks = tasks.map((el) => {
+      return task.id === el.id ? task : el;
+    });
+
+    setTasks(newTasks);
+    setEdit('');
+    setAction('');
+    saveTasks(tasks);
+  };
+
+  const clearAction = () => {
+    setAction('');
+  };
+
+  //render methods
 
   const drawTasks = (tasks) => {
     let tasksArray = [];
@@ -139,7 +143,7 @@ function Main(props) {
         ) : (
           ''
         )}
-        {action === '' && tasks.length!==0 ? (
+        {action === '' && tasks.length !== 0 ? (
           <Fragment>
             <Search searchTask={searchTask} />
             <div className="addBtnWrapper">
