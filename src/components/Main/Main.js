@@ -1,16 +1,19 @@
 import './Main.css';
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Task from '../Task/Task';
 import Search from '../Search/Search';
 import Form from '../Form/Form';
 import { getTasks, saveTasks } from '../../dataProvider/dataProvider';
+import LoggedConsumer from '../../contexts/LoggedContext';
 
 function Main(props) {
+  const logged = useContext(LoggedConsumer);
   const [tasks, setTasks] = useState([]);
   const [filter, setFilter] = useState('');
   const [action, setAction] = useState('');
   const [edit, setEdit] = useState('');
-
+  const [user, setUser] = useState('');
+  const [pass, setPass] = useState('');
   useEffect(() => {
     let newTasks = getTasks();
     newTasks = newTasks ? newTasks : '[]';
@@ -21,6 +24,10 @@ function Main(props) {
   useEffect(() => {
     saveTasks(tasks);
   });
+
+  useEffect(() => {
+    setAction(props.action);
+  }, [props.action]);
 
   //Task component methods
   const searchTask = (searchText) => {
@@ -87,10 +94,6 @@ function Main(props) {
     saveTasks(tasks);
   };
 
-  const clearAction = () => {
-    setAction('');
-  };
-
   //render methods
 
   const drawTasks = (tasks) => {
@@ -119,40 +122,67 @@ function Main(props) {
     } else return <div className="errorNoTasks">NO HAY TAREAS</div>;
   };
 
+  const userHandler = (e) => {
+    setUser(e.target.value);
+  };
+  const passHandler = (e) => {
+    setPass(e.target.value);
+  };
+  const logBtnHandler = () => {
+    if (user === 'admin' && pass === '1234admin') {
+      logged.toggleLogged();
+    }
+    else
+    {
+      props.clearAction();
+    }
+  };
+  const cancelBtnHandler = () => {};
+
   return (
     <main>
       <div className="wrapper">
-        {action === 'add' || tasks.length === 0 ? (
+        {(action === 'add' || tasks.length === 0) && logged.logged && (
           <Form
             formSubmit={addTask}
-            clearAction={clearAction}
+            clearAction={props.clearAction}
             text="Añadir Tarea"
           />
-        ) : (
-          ''
         )}
-        {action === 'edit' ? (
+        {action === 'edit' && (
           <Form
             formSubmit={editTask}
-            clearAction={clearAction}
+            clearAction={props.clearAction}
             task={tasks.filter((task) => task.id === edit)[0]}
             text="Editar Tarea"
           />
-        ) : (
-          ''
         )}
-        {action === '' && tasks.length !== 0 ? (
-          <Fragment>
+        {action === '' && tasks.length !== 0 && (
+          <>
             <Search searchTask={searchTask} />
-            <div className="addBtnWrapper">
-              <button onClick={actionAdd}>Añadir</button>
-            </div>
+            {logged.logged && (
+              <div className="addBtnWrapper">
+                <button onClick={actionAdd}>Añadir</button>
+              </div>
+            )}
             <div className="taskWrapper">
               <ul className="tasks">{drawTasks(tasks)}</ul>
             </div>
-          </Fragment>
-        ) : (
-          ''
+          </>
+        )}
+        {action === 'login' && (
+          <>
+            <h2>LOGIN</h2>
+            <div className="loginWrapper">
+              <label htmlFor="userInput">Usuario: </label>
+              <input type="text" id="userInput" onChange={userHandler} />
+              <br />
+              <label htmlFor="passInput">Contraseña: </label>
+              <input type="text" id="passInput" onChange={passHandler} />
+              <button onClick={logBtnHandler}>Enviar</button>
+              <button onClick={cancelBtnHandler}>Cancelar</button>
+            </div>
+          </>
         )}
       </div>
     </main>

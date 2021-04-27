@@ -23,6 +23,20 @@ Ambos botones llevarán al usuario al listado anterior, pero en el caso del prim
 
 9- En el listado, cuando el usuario cambie la prioridad de una tarea a Alta (es decir, siendo Baja previamente) el resto de tareas cambiarán a Baja (si no lo estaban ya).
 
+FASE 2
+1- Añadir mediante Context un estado logado/no logado, que permita al usuario realizar todas las operaciones anteriores si está logado, o solo lecturas, si no lo lo está.
+
+1bis (opcional)- Añadir mediante Context el modo oscuro/claro mediante un botón que alterne entre ambos modos y que la aplicación reciba unos estilos u otros en función de dicho modo.
+
+2- Añadir una nueva vista Login a la aplicación, que simule la autenticación del usuario, recogiendo un usuario y password por formulario, y en caso de ser correctos, actualizar el estado a logado.
+
+3- Añadir un botón de Logout a la aplicación, solo visible en el estado logado, en todas las otras vistas que no sean la de Login.
+
+4- Enrutar todas las vistas de la aplicación a endpoints coherentes (p.e.: /login, /taskLists, /newTask, /editTask/1)
+
+
+
+
 
 # Getting Started with Create React App
 

@@ -1,21 +1,11 @@
 import './Task.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import LoggedConsumer from '../../contexts/LoggedContext';
 
 function Task(props) {
   const [task, setTask] = useState({});
-  /*   constructor(props) {
-    super(props);
 
-    this.state = {
-      title: props.tarea.title,
-      id: props.tarea.id,
-      done: props.tarea.done,
-    };
-
-    this.rot = {
-      transform: `rotate(${Math.random() * 5 - 2.5}deg)`,
-    };
-  } */
+  const logged = useContext(LoggedConsumer);
 
   useEffect(() => {
     const newTask = {
@@ -48,30 +38,36 @@ function Task(props) {
 
   return (
     <li style={rotStyle} className={`${props.tarea.priority} task`}>
-      <input
-        type="checkbox"
-        checked={props.tarea.done}
-        onChange={checkboxHandler}
-      ></input>
+      {logged.logged && (
+        <input
+          type="checkbox"
+          checked={props.tarea.done}
+          onChange={checkboxHandler}
+        ></input>
+      )}
       <div className="titleWrapper">
-        <p className={props.tarea.done ? 'done' : ''}>
-          {props.tarea.title}
-        </p>
+        <p className={props.tarea.done ? 'done' : ''}>{props.tarea.title}</p>
       </div>
-      <div className="seletWrapper">
-        <select
-          name="select"
-          onChange={selectHandler}
-          value={props.tarea.priority}
-        >
-          <option value="alta">Alta</option>
-          <option value="baja">Baja</option>
-        </select>
-      </div>
-      <div className="buttonWrapper">
-        <button onClick={editClickHandler}>Editar</button>
-        <button onClick={delClickHandler}>Eliminar</button>
-      </div>
+
+      {logged.logged && (
+        <div className="seletWrapper">
+          <select
+            name="select"
+            onChange={selectHandler}
+            value={props.tarea.priority}
+          >
+            <option value="alta">Alta</option>
+            <option value="baja">Baja</option>
+          </select>
+        </div>
+      )}
+
+      {logged.logged && (
+        <div className="buttonWrapper">
+          <button onClick={editClickHandler}>Editar</button>
+          <button onClick={delClickHandler}>Eliminar</button>
+        </div>
+      )}
     </li>
   );
 }
