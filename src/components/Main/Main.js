@@ -12,8 +12,7 @@ function Main(props) {
   const [filter, setFilter] = useState('');
   const [action, setAction] = useState('');
   const [edit, setEdit] = useState('');
-  const [user, setUser] = useState('');
-  const [pass, setPass] = useState('');
+
   useEffect(() => {
     let newTasks = getTasks();
     newTasks = newTasks ? newTasks : '[]';
@@ -122,22 +121,6 @@ function Main(props) {
     } else return <div className="errorNoTasks">NO HAY TAREAS</div>;
   };
 
-  const userHandler = (e) => {
-    setUser(e.target.value);
-  };
-  const passHandler = (e) => {
-    setPass(e.target.value);
-  };
-  const logBtnHandler = () => {
-    if (user === 'admin' && pass === '1234admin') {
-      logged.toggleLogged();
-    }
-    else
-    {
-      props.clearAction();
-    }
-  };
-  const cancelBtnHandler = () => {};
 
   return (
     <main>
@@ -167,20 +150,6 @@ function Main(props) {
             )}
             <div className="taskWrapper">
               <ul className="tasks">{drawTasks(tasks)}</ul>
-            </div>
-          </>
-        )}
-        {action === 'login' && (
-          <>
-            <h2>LOGIN</h2>
-            <div className="loginWrapper">
-              <label htmlFor="userInput">Usuario: </label>
-              <input type="text" id="userInput" onChange={userHandler} />
-              <br />
-              <label htmlFor="passInput">Contraseña: </label>
-              <input type="text" id="passInput" onChange={passHandler} />
-              <button onClick={logBtnHandler}>Enviar</button>
-              <button onClick={cancelBtnHandler}>Cancelar</button>
             </div>
           </>
         )}
